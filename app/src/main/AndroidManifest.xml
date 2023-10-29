@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <application
+        android:allowBackup="true"
+        android:dataExtractionRules="@xml/data_extraction_rules"
+        android:fullBackupContent="@xml/backup_rules"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:roundIcon="@mipmap/ic_launcher_round"
+        android:supportsRtl="true"
+        android:theme="@style/Theme.Pomodoro"
+        tools:targetApi="31">
+        <activity
+            android:name=".Task.ListSide.CreateTaskListActivity"
+            android:exported="false" />
+        <activity
+            android:name=".Task.ListSide.TasksListActivity"
+            android:exported="false" />
+        <activity
+            android:name=".Task.TaskSide.EditTaskActivity"
+            android:exported="false" />
+        <activity
+            android:name=".Task.TaskSide.CreateTaskActivity"
+            android:exported="false" />
+        <activity
+            android:name=".Pomodoro.PomodoroFragment"
+            android:exported="false" />
+        <activity
+            android:name=".Task.TaskSide.TareasCompletadasFragment"
+            android:exported="false" />
+        <activity
+            android:name=".Task.TaskSide.TareasFragment"
+            android:exported="false" />
+        <activity
+            android:name=".CompletedListsActivity"
+            android:exported="false" />
+        <activity
+            android:name=".CompletedTasksActivity"
+            android:exported="false" />
+        <activity
+            android:name=".Task.ListSide.ManagementListActivity"
+            android:exported="false" />
+        <activity
+            android:name=".Task.TaskSide.ManagementTasksActivity"
+            android:exported="false" />
+        <activity
+            android:name=".Options.OptionsActivity"
+            android:exported="false" />
+        <activity
+            android:name=".Task.TaskSide.TasksActivity"
+            android:exported="false" />
+        <activity
+            android:name=".DetailsPomodoroActivity"
+            android:exported="false" />
+        <activity
+            android:name=".DeletePomodoroActivity"
+            android:exported="false" />
+        <activity
+            android:name=".Pomodoro.EditPomodoroActivity"
+            android:exported="false" />
+        <activity
+            android:name=".Pomodoro.ManagementPomodoroActivity"
+            android:exported="false" />
+        <activity
+            android:name=".Test"
+            android:exported="false" />
+        <activity android:name=".Task.ListSide.EditTaskListActivity"
+            android:exported="false" />
+        <activity
+            android:name=".Pomodoro.CreatePomodoroActivity"
+            android:exported="false" />
+        <activity
+            android:name=".Pomodoro.FirstAppActivity"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+    </application>
+
+</manifest>

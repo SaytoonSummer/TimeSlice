@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".Pomodoro.PomodoroFragment">
+
+    <TextView
+        android:id="@+id/textViewCountDown2"
+        android:layout_width="241dp"
+        android:layout_height="0dp"
+        android:layout_marginTop="188dp"
+        android:layout_marginEnd="56dp"
+        android:layout_marginBottom="34dp"
+        android:fontFamily="sans-serif-light"
+        android:text="25:00"
+        android:textColor="#201E1E"
+        android:textSize="70sp"
+        app:layout_constraintBottom_toTopOf="@+id/progressBar"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/skip2" />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/skip2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="14dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginBottom="161dp"
+        android:backgroundTint="#FF6666"
+        android:text="skip"
+        android:textColor="@color/white"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toTopOf="@+id/textViewCountDown2"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"></androidx.appcompat.widget.AppCompatButton>
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="228dp"
+        android:layout_height="0dp"
+        android:fontFamily="sans-serif-medium"
+        android:text="Tiempo Focus"
+        android:textAlignment="center"
+        android:textColor="#000000"
+        android:textSize="24sp"
+        app:layout_constraintBottom_toBottomOf="@+id/skip2"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/skip2" />
+
+    <LinearLayout
+        android:id="@+id/linearLayout2"
+        android:layout_width="423dp"
+        android:layout_height="0dp"
+        android:gravity="bottom"
+        android:paddingBottom="100px"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/progressBar">
+
+        <ImageView
+            android:id="@+id/play"
+            android:layout_width="103dp"
+            android:layout_height="50dp"
+            android:layout_marginLeft="40px"
+            android:layout_marginRight="30px"
+            app:srcCompat="@drawable/_75" />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/pomodoro"
+            android:layout_width="139dp"
+            android:layout_height="55dp"
+            android:backgroundTint="#FF6666"
+            android:text="Pomodoro"
+            android:textColor="@color/white" />
+
+        <ImageView
+            android:id="@+id/reset"
+            android:layout_width="97dp"
+            android:layout_height="50dp"
+            android:layout_marginLeft="5px"
+            app:srcCompat="@drawable/reset" />
+
+    </LinearLayout>
+
+    <ProgressBar
+        android:id="@+id/progress_bar"
+        style="@style/CircularDeterminateProgressBar"
+        android:layout_width="296dp"
+        android:layout_height="239dp"
+        android:layout_marginStart="40dp"
+        android:layout_marginTop="205dp"
+        android:layout_marginEnd="40dp"
+        android:layout_marginBottom="168dp"
+        app:layout_constraintBottom_toTopOf="@+id/linearLayout2"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.485"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.451"
+        tools:progress="60" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

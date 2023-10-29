@@ -1,0 +1,11 @@
+<resources>
+    <string name="app_name">TimeSlice</string>
+    <string-array name="options">
+        <item>Pomodoro</item>
+        <item>Tareas</item>
+        <item>Ajustes</item>
+    </string-array>
+
+    <string name="default_spinner_text">Select an option</string>
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+</resources>
