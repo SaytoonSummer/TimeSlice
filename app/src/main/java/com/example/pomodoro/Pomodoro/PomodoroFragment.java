@@ -8,6 +8,7 @@ import android.graphics.drawable.Drawable;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.os.CountDownTimer;
+import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -51,6 +52,8 @@ public class PomodoroFragment extends Fragment {
     private boolean isSoundPlaying = false;
     private int currentRound = 0;
 
+    private boolean soundEnabled;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_pomodoro, container, false);
@@ -69,13 +72,18 @@ public class PomodoroFragment extends Fragment {
         mButtonReset.setOnClickListener(v -> resetTimer());
         mButtonSkip.setOnClickListener(v -> skipToNextPhase());
 
+        soundEnabled = PreferenceManager.getDefaultSharedPreferences(requireContext()).getBoolean("sound_preference", true);
+
         getDefaultPomodoroFromDatabase();
 
         return view;
     }
 
     private void startTimer(long timeInMillis) {
-        playSound(R.raw.roundpass);
+        if (soundEnabled) {
+            playSound(R.raw.roundpass);
+        }
+
         if (!mTimerRunning) {
             mCountDownTimer = new CountDownTimer(timeInMillis, 1000) {
                 @Override
@@ -98,7 +106,10 @@ public class PomodoroFragment extends Fragment {
                         startTimer(mTimeLeftInMillis);
                     } else {
                         resetPomodoro();
-                        playSound(R.raw.pomodoropass);
+
+                        if (soundEnabled) {
+                            playSound(R.raw.pomodoropass);
+                        }
                     }
                 }
             };
@@ -111,13 +122,11 @@ public class PomodoroFragment extends Fragment {
         }
     }
 
+
     private void updateProgressBar() {
         int progress = (int) ((mTimeLeftInMillis * 100) / getPhaseTime(selectedPomodoro, currentRound));
-
         progressBar.setProgress(progress);
-
     }
-
 
     private void toggleTimer() {
         if (selectedPomodoro != null) {
@@ -142,6 +151,7 @@ public class PomodoroFragment extends Fragment {
             Toast.makeText(requireContext(), "No se ha seleccionado un Pomodoro", Toast.LENGTH_SHORT).show();
         }
     }
+
 
     private long getPhaseTime(PomodoroModel pomodoro, int round) {
         if (round % 2 == 0) {
@@ -310,7 +320,10 @@ public class PomodoroFragment extends Fragment {
                 progressBar.setProgressTintList(ColorStateList.valueOf(color));
                 Drawable progressDrawable = ContextCompat.getDrawable(requireContext(), R.drawable.circleprogress);
                 progressBar.setProgressDrawable(progressDrawable);
-                playSound(R.raw.roundpass);
+
+                if (soundEnabled) {
+                    playSound(R.raw.roundpass);
+                }
             } else {
                 if (currentRound < selectedPomodoro.getRounds() * 2 - 1) {
                     mTimeLeftInMillis = selectedPomodoro.getBreakTime() * 60 * 1000;
@@ -319,7 +332,10 @@ public class PomodoroFragment extends Fragment {
                     progressBar.setProgressTintList(ColorStateList.valueOf(color));
                     Drawable progressDrawable = ContextCompat.getDrawable(requireContext(), R.drawable.circleprogress);
                     progressBar.setProgressDrawable(progressDrawable);
-                    playSound(R.raw.roundpass);
+
+                    if (soundEnabled) {
+                        playSound(R.raw.roundpass);
+                    }
                 } else {
                     mTimeLeftInMillis = selectedPomodoro.getLongBreak() * 60 * 1000;
                     isFocusPhase = false;
@@ -327,15 +343,11 @@ public class PomodoroFragment extends Fragment {
                     progressBar.setProgressTintList(ColorStateList.valueOf(color));
                     Drawable progressDrawable = ContextCompat.getDrawable(requireContext(), R.drawable.circleprogress);
                     progressBar.setProgressDrawable(progressDrawable);
-                    playSound(R.raw.roundpass);
+
+                    if (soundEnabled) {
+                        playSound(R.raw.roundpass);
+                    }
                 }
-            }
-
-            updateCountDownText();
-
-            if (currentRound >= selectedPomodoro.getRounds() * 2) {
-                resetPomodoro();
-                Toast.makeText(requireContext(), "Pomodoro completado", Toast.LENGTH_SHORT).show();
             }
         }
     }

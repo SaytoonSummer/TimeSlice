@@ -2,6 +2,8 @@ package com.example.pomodoro.Task.ListSide;
 
 import android.content.Context;
 import android.content.Intent;
+import android.media.MediaPlayer;
+import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
@@ -27,10 +29,19 @@ public class TaskListAdapter extends RecyclerView.Adapter<TaskListAdapter.TaskVi
     private List<TaskModel> taskList;
     private Context context;
     private String listId;
+    private MediaPlayer mediaPlayer;
+    private boolean soundEnabled;
 
     public TaskListAdapter(List<TaskModel> taskList, Context context) {
         this.taskList = taskList;
         this.context = context;
+        this.mediaPlayer = MediaPlayer.create(context, R.raw.tasksound);
+        this.soundEnabled = PreferenceManager.getDefaultSharedPreferences(context).getBoolean("sound_preference", true);
+    }
+
+    public void setSoundEnabled(boolean soundEnabled) {
+        this.soundEnabled = soundEnabled;
+        notifyDataSetChanged();
     }
 
     public void initialize(String listId) {
@@ -60,7 +71,6 @@ public class TaskListAdapter extends RecyclerView.Adapter<TaskListAdapter.TaskVi
             intent.putExtra("ListId", listId);
             context.startActivity(intent);
         });
-
     }
 
     @Override
@@ -82,6 +92,15 @@ public class TaskListAdapter extends RecyclerView.Adapter<TaskListAdapter.TaskVi
     private void completeTask(TaskModel task) {
         moveTaskToCompletedList(task);
         deleteTask(task);
+
+        if (soundEnabled) {
+            if (mediaPlayer.isPlaying()) {
+                mediaPlayer.stop();
+                mediaPlayer.release();
+                mediaPlayer = MediaPlayer.create(context, R.raw.tasksound);
+            }
+            mediaPlayer.start();
+        }
     }
 
     private void moveTaskToCompletedList(TaskModel task) {

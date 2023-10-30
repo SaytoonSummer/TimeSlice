@@ -1,6 +1,10 @@
 package com.example.pomodoro.Task.TaskSide;
 
+import static com.example.pomodoro.AppSettings.soundEnabled;
+
 import android.content.Context;
+import android.media.MediaPlayer;
+import android.preference.PreferenceManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,12 +24,16 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.ViewHolder> {
     private Context context;
     private OnTaskClickListener onTaskClickListener;
     private OnTaskCompleteListener onTaskCompleteListener;
+    private MediaPlayer mediaPlayer;
+    private boolean soundEnabled;
 
     public TaskAdapter(List<TaskModel> taskList, Context context, OnTaskClickListener onTaskClickListener, OnTaskCompleteListener onTaskCompleteListener) {
         this.taskList = taskList;
         this.context = context;
         this.onTaskClickListener = onTaskClickListener;
         this.onTaskCompleteListener = onTaskCompleteListener;
+        this.mediaPlayer = MediaPlayer.create(context, R.raw.tasksound);
+        this.soundEnabled = PreferenceManager.getDefaultSharedPreferences(context).getBoolean("sound_preference", true);
     }
 
     @NonNull
@@ -63,7 +71,6 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.ViewHolder> {
             editarButton = itemView.findViewById(R.id.editar);
             circleImageView = itemView.findViewById(R.id.imageView4);
 
-            // Configura el clic del botón
             editarButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
@@ -75,13 +82,25 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.ViewHolder> {
                 }
             });
 
-            // Configura el clic de la imagen
             circleImageView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
                     int adapterPosition = getAdapterPosition();
                     if (adapterPosition != RecyclerView.NO_POSITION) {
                         TaskModel completedTask = taskList.get(adapterPosition);
+
+                        soundEnabled = PreferenceManager.getDefaultSharedPreferences(context).getBoolean("sound_preference", true);
+
+                        if (soundEnabled) {
+                            if (mediaPlayer.isPlaying()) {
+                                mediaPlayer.stop();
+                                mediaPlayer.release();
+                                mediaPlayer = MediaPlayer.create(itemView.getContext(), R.raw.tasksound);
+                            }
+
+                            mediaPlayer.start();
+                        }
+
                         onTaskCompleteListener.onCompleteTask(completedTask);
                     }
                 }
@@ -90,9 +109,7 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.ViewHolder> {
 
         public void bind(TaskModel task) {
             editarButton.setText(task.getTaskName());
-            // Puedes agregar más configuraciones aquí si es necesario
 
-            // Asegúrate de que la URL de la imagen sea correcta
             circleImageView.setImageResource(R.drawable.circleprogress);
         }
     }
@@ -105,3 +122,4 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.ViewHolder> {
         void onCompleteTask(TaskModel task);
     }
 }
+

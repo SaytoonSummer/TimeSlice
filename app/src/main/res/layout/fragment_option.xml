@@ -28,7 +28,7 @@
             android:layout_width="378dp"
             android:layout_height="wrap_content"
             android:backgroundTint="#393535"
-            android:text="Tema de la App"
+            android:text="Cambiar Tema de la App"
             android:textColor="#FFFFFF" />
 
         <Button
@@ -36,7 +36,7 @@
             android:layout_width="379dp"
             android:layout_height="wrap_content"
             android:backgroundTint="#FF6666"
-            android:text="Sonidos"
+            android:text="Desactivar Sonidos"
             android:textColor="#FFFFFF" />
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>
