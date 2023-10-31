@@ -110,7 +110,7 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.ViewHolder> {
         public void bind(TaskModel task) {
             editarButton.setText(task.getTaskName());
 
-            circleImageView.setImageResource(R.drawable.circleprogress);
+            circleImageView.setImageResource(R.drawable.circle);
         }
     }
 
