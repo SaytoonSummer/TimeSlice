@@ -221,7 +221,6 @@ public class PomodoroFragment extends Fragment {
             pauseTimer();
         }
 
-        // Reiniciar todas las variables y vistas relacionadas con el temporizador
         mTimeLeftInMillis = getPhaseTime(selectedPomodoro, 0);
         currentRound = 0;
         isFocusPhase = true;
@@ -229,12 +228,10 @@ public class PomodoroFragment extends Fragment {
         updateCountDownText();
         updateFocusTimeTextView();
 
-        // Ocultar o restablecer cualquier otra vista según sea necesario
         mButtonReset.setVisibility(View.INVISIBLE);
         mButtonStartPause.setImageResource(R.drawable._75);
         mButtonSkip.setVisibility(View.INVISIBLE);
 
-        // Reiniciar el Pomodoro si es necesario
         if (pomodoroCompleted) {
             resetPomodoro();
             pomodoroCompleted = false;
