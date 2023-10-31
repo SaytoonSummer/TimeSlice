@@ -5,6 +5,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
@@ -26,10 +27,14 @@ public class TareasCompletadasFragment extends Fragment implements TaskAdapter2.
     private List<TaskModel> taskList2;
     private CollectionReference completedTaskCollection;
     private CollectionReference taskCollection;
+    private ProgressBar progressBar;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_tareas_completadas, container, false);
+
+        progressBar = view.findViewById(R.id.progressBar4);
+        progressBar.setVisibility(View.VISIBLE);
 
         recyclerView = view.findViewById(R.id.recyclerView3);
         taskList2 = new ArrayList<>();
@@ -42,7 +47,6 @@ public class TareasCompletadasFragment extends Fragment implements TaskAdapter2.
 
         loadCompletedTasksFromDatabase();
 
-
         return view;
     }
 
@@ -53,16 +57,17 @@ public class TareasCompletadasFragment extends Fragment implements TaskAdapter2.
                 .addOnSuccessListener(queryDocumentSnapshots -> {
                     for (QueryDocumentSnapshot document : queryDocumentSnapshots) {
                         TaskModel task = document.toObject(TaskModel.class);
-
                         taskList2.add(task);
                     }
 
                     taskAdapter2.notifyDataSetChanged();
+                    progressBar.setVisibility(View.GONE);
 
                     Log.d("LoadCompletedTasks", "Datos de tareas completadas cargados exitosamente. Cantidad de elementos: " + taskList2.size());
                 })
                 .addOnFailureListener(e -> {
                     Toast.makeText(requireContext(), "Error cargando tareas completadas", Toast.LENGTH_SHORT).show();
+                    progressBar.setVisibility(View.GONE);
 
                     Log.e("LoadCompletedTasks", "Error al cargar datos de tareas completadas: " + e.getMessage());
                 });
@@ -70,14 +75,15 @@ public class TareasCompletadasFragment extends Fragment implements TaskAdapter2.
 
     @Override
     public void onEditButtonClick(TaskModel task) {
+        // Implementación según necesidades
     }
 
     @Override
     public void onCompleteTask(TaskModel task, int position) {
+        // Implementación según necesidades
     }
 
     private void removeCompletedTaskFromDatabase(TaskModel task) {
-
+        // Implementación según necesidades
     }
 }
-

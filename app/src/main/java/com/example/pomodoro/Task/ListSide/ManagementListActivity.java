@@ -6,6 +6,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -31,6 +32,7 @@ public class ManagementListActivity extends AppCompatActivity {
     private List<ListModel> listModels;
     private FirebaseFirestore db;
     private CollectionReference collectionReference;
+    private ProgressBar progressBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,6 +44,8 @@ public class ManagementListActivity extends AppCompatActivity {
         editTextListName = findViewById(R.id.editTextText4);
         createListButton = findViewById(R.id.button3);
         recyclerView = findViewById(R.id.recyclerView4);
+        progressBar = findViewById(R.id.progressBar);
+        progressBar.setVisibility(View.VISIBLE);
 
         listModels = new ArrayList<>();
         listAdapter = new ListAdapter(listModels, this);
@@ -82,7 +86,7 @@ public class ManagementListActivity extends AppCompatActivity {
                         editTextListName.getText().clear();
                     })
                     .addOnFailureListener(e -> {
-                        Toast.makeText(this, "Error creando el documento", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(ManagementListActivity.this, "Error creando el documento", Toast.LENGTH_SHORT).show();
 
                         Log.e("CreateList", "Error al crear el documento: " + e.getMessage());
                     });
@@ -116,20 +120,21 @@ public class ManagementListActivity extends AppCompatActivity {
                 .addOnSuccessListener(queryDocumentSnapshots -> {
                     for (QueryDocumentSnapshot document : queryDocumentSnapshots) {
                         ListModel list = document.toObject(ListModel.class);
-
                         listModels.add(list);
 
                         Log.d("LoadLists", "Lista cargada: " + list.getListName());
                     }
 
                     listAdapter.notifyDataSetChanged();
+                    progressBar.setVisibility(View.GONE);
 
                     Log.d("LoadLists", "Datos de listas cargados exitosamente. Cantidad de elementos: " + listModels.size());
                 })
                 .addOnFailureListener(e -> {
-                    Toast.makeText(this, "Error cargando listas", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(ManagementListActivity.this, "Error cargando listas", Toast.LENGTH_SHORT).show();
+                    progressBar.setVisibility(View.GONE);
 
                     Log.e("LoadLists", "Error al cargar datos de listas: " + e.getMessage());
                 });
-        }
     }
+}

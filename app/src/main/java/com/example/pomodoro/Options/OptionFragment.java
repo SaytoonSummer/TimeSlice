@@ -24,10 +24,7 @@ public class OptionFragment extends Fragment {
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(requireContext());
         boolean soundEnabled = preferences.getBoolean("sound_preference", true);
 
-        Button changeThemeButton = view.findViewById(R.id.button10);
         Button disableSoundButton = view.findViewById(R.id.button11);
-
-        changeThemeButton.setOnClickListener(v -> changeTheme());
 
         disableSoundButton.setOnClickListener(v -> {
             SharedPreferences.Editor editor = preferences.edit();

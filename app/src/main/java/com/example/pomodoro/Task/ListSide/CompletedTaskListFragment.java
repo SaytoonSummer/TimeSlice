@@ -10,6 +10,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.example.pomodoro.R;
@@ -27,9 +28,14 @@ public class CompletedTaskListFragment extends Fragment {
     private TaskListAdapter2 taskListAdapter2;
     private List<TaskModel> completedTaskList;
     private String listId;
+    private ProgressBar progressBar;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_completed_task_list, container, false);
+
+        progressBar = view.findViewById(R.id.progressBar5);
+        progressBar.setVisibility(View.VISIBLE);
 
         recyclerView = view.findViewById(R.id.recyclerView3);
         completedTaskList = new ArrayList<>();
@@ -58,6 +64,7 @@ public class CompletedTaskListFragment extends Fragment {
                 Toast.makeText(requireContext(), "Error cargando tareas completadas en tiempo real", Toast.LENGTH_SHORT).show();
 
                 Log.e("LoadCompletedTasks", "Error cargando datos de tareas completadas en tiempo real: " + e.getMessage());
+                progressBar.setVisibility(View.GONE);
                 return;
             }
 
@@ -68,12 +75,12 @@ public class CompletedTaskListFragment extends Fragment {
             for (QueryDocumentSnapshot document : queryDocumentSnapshots) {
                 if (document.exists() && document.toObject(TaskModel.class) != null) {
                     TaskModel completedTask = document.toObject(TaskModel.class);
-
                     completedTaskList.add(completedTask);
                 }
             }
 
             taskListAdapter2.notifyDataSetChanged();
+            progressBar.setVisibility(View.GONE);
 
             Log.d("LoadCompletedTasks", "Datos de tareas completadas cargados con éxito. Cantidad de elementos: " + completedTaskList.size());
         });

@@ -81,7 +81,8 @@
             android:layout_width="97dp"
             android:layout_height="50dp"
             android:layout_marginLeft="5px"
-            app:srcCompat="@drawable/reset" />
+            app:srcCompat="@drawable/reset"
+            android:visibility="invisible"/>
 
     </LinearLayout>
 

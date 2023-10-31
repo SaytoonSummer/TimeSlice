@@ -24,14 +24,6 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <Button
-            android:id="@+id/button10"
-            android:layout_width="378dp"
-            android:layout_height="wrap_content"
-            android:backgroundTint="#393535"
-            android:text="Cambiar Tema de la App"
-            android:textColor="#FFFFFF" />
-
-        <Button
             android:id="@+id/button11"
             android:layout_width="379dp"
             android:layout_height="wrap_content"

@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
@@ -27,11 +28,14 @@ public class TareasFragment extends Fragment implements TaskAdapter.OnTaskClickL
     private TaskAdapter taskAdapter;
     private List<TaskModel> taskList;
     private CollectionReference taskCollection;
-
+    private ProgressBar progressBar;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_tareas, container, false);
+
+        progressBar = view.findViewById(R.id.progressBar3);
+        progressBar.setVisibility(View.VISIBLE);
 
         recyclerView = view.findViewById(R.id.recyclerView2);
         taskList = new ArrayList<>();
@@ -68,11 +72,11 @@ public class TareasFragment extends Fragment implements TaskAdapter.OnTaskClickL
 
             for (QueryDocumentSnapshot document : queryDocumentSnapshots) {
                 TaskModel task = document.toObject(TaskModel.class);
-
                 taskList.add(task);
             }
 
             taskAdapter.notifyDataSetChanged();
+            progressBar.setVisibility(View.GONE);
 
             Log.d("LoadData", "Datos cargados exitosamente. Cantidad de elementos: " + taskList.size());
         });
